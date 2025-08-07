@@ -1,10 +1,9 @@
-import { Button } from "./components/ui/button";
+import { Outlet } from "react-router";
 
 function App() {
   return (
     <>
-      <h1>Tour Management Client App</h1>
-      <Button>ShadCn</Button>
+      <Outlet />
     </>
   );
 }

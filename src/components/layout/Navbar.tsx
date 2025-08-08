@@ -13,7 +13,7 @@ import {
 import { ModeToggle } from "./ModeToggler";
 import { Link } from "react-router";
 import { AlignJustify } from "lucide-react";
-import logo from "../../assets/images/tour-logo.png";
+import Logo from "@/assets/icons/Logo";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -54,9 +54,7 @@ export default function Navbar() {
           </Popover>
           {/* Main nav */}
           <div className="flex items-center gap-6">
-            <a href="#" className="text-primary hover:text-primary/90">
-              <img src={logo} alt="" className="size-10 rounded-full" />
-            </a>
+            <Logo />
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">

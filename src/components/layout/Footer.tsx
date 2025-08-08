@@ -1,4 +1,4 @@
-import logo from "../../assets/images/tour-logo.png";
+import Logo from "@/assets/icons/Logo";
 
 export default function Footer() {
   return (
@@ -6,9 +6,7 @@ export default function Footer() {
       <div className="mx-auto container space-y-8 px-4 py-16">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
-            <div className="dark:text-muted-foreground text-foreground">
-              <img src={logo} alt="" className="size-10 rounded-full" />
-            </div>
+            <Logo />
 
             <p className="mt-4 max-w-xs dark:text-muted-foreground text-foreground">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non

@@ -16,6 +16,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import Password from "@/components/ui/Password";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 
 const registerSchema = z
   .object({
@@ -40,7 +41,7 @@ export function RegisterForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  //   const [register] = useRegisterMutation();
+  const [register] = useRegisterMutation();
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -59,16 +60,15 @@ export function RegisterForm({
       email: data.email,
       password: data.password,
     };
-    console.log(userInfo);
 
-    // try {
-    //   const result = await register(userInfo).unwrap();
-    //   console.log(result);
-    //   toast.success("User created successfully");
-    //   navigate("/verify");
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      const result = await register(userInfo).unwrap();
+      console.log(result);
+      toast.success("User created successfully");
+      navigate("/verify");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

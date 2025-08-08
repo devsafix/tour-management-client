@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -9,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-// import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -20,20 +21,23 @@ export function LoginForm({
 }: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
   const form = useForm();
-  //   const [login] = useLoginMutation();
+  const [login] = useLoginMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    // try {
-    // //   const res = await login(data).unwrap();
-    //   console.log(res);
-    // } catch (err) {
-    //   console.error(err);
-    //   if (err.status === 401) {
-    //     toast.error("Your account is not verified");
-    //     navigate("/verify", { state: data.email });
-    //   }
-    // }
-
-    console.log(data);
+    try {
+      const res = await login(data).unwrap();
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "status" in err &&
+        (err as any).status === 401
+      ) {
+        toast.error("Your account is not verified");
+        navigate("/verify", { state: data.email });
+      }
+    }
   };
 
   return (

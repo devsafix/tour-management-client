@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { useState } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -21,24 +22,34 @@ export function LoginForm({
 }: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
   const form = useForm();
+
+  const [loading, setLoading] = useState(false);
+
   const [login] = useLoginMutation();
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    setLoading(true);
     try {
-      const res = await login({
+      const userInfo = {
         email: data.email,
         password: data.password,
-      }).unwrap();
-      navigate("/");
-      console.log(res);
-    } catch (err) {
-      console.error(err);
-      if (
-        typeof err === "object" &&
-        err !== null &&
-        "status" in err &&
-        (err as any).status === 401
-      ) {
+      };
+      const res = await login(userInfo).unwrap();
+      if (res.success) {
+        toast.success("Logged in successfully");
+        navigate("/");
+        setLoading(false);
+      }
+    } catch (err: any) {
+      if (err.data.message === "User does not exist") {
+        toast.error("User does not exist");
+      }
+
+      if (err.data.message === "Password does not match") {
+        toast.error("Invalid credentials");
+      }
+
+      if (err.data.message === "User is not verified") {
         toast.error("Your account is not verified");
         navigate("/verify", { state: data.email });
       }
@@ -93,8 +104,8 @@ export function LoginForm({
               )}
             />
 
-            <Button type="submit" className="w-full">
-              Login
+            <Button type="submit" className="w-full cursor-pointer">
+              {loading ? "Logging" : "Login"}
             </Button>
           </form>
         </Form>

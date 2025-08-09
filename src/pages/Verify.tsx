@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -47,7 +48,7 @@ export default function Verify() {
   const [confirmed, setConfirmed] = useState(false);
   const [sendOtp] = useSendOtpMutation();
   const [verifyOtp] = useVerifyOtpMutation();
-  const [timer, setTimer] = useState(5);
+  const [timer, setTimer] = useState(120);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -67,9 +68,7 @@ export default function Verify() {
         setConfirmed(true);
         setTimer(5);
       }
-    } catch (err) {
-      console.log(err);
-
+    } catch (err: any) {
       toast.error(err.data.message, { id: toastId });
     }
   };
@@ -100,7 +99,6 @@ export default function Verify() {
 
     const timerId = setInterval(() => {
       setTimer((prev) => (prev > 0 ? prev - 1 : 0));
-      console.log("Tick");
     }, 1000);
 
     return () => clearInterval(timerId);
@@ -175,7 +173,7 @@ export default function Verify() {
             </Form>
           </CardContent>
           <CardFooter className="flex justify-end">
-            <Button form="otp-form" type="submit">
+            <Button form="otp-form" type="submit" className="cursor-pointer">
               Submit
             </Button>
           </CardFooter>
@@ -189,7 +187,10 @@ export default function Verify() {
             </CardDescription>
           </CardHeader>
           <CardFooter className="flex justify-end">
-            <Button onClick={handleSendOtp} className="w-[300px]">
+            <Button
+              onClick={handleSendOtp}
+              className="w-[300px] cursor-pointer"
+            >
               Confirm
             </Button>
           </CardFooter>

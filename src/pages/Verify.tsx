@@ -69,6 +69,8 @@ export default function Verify() {
       }
     } catch (err) {
       console.log(err);
+
+      toast.error(err.data.message, { id: toastId });
     }
   };
 

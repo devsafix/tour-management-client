@@ -23,8 +23,12 @@ export function LoginForm({
   const form = useForm();
   const [login] = useLoginMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log(data);
     try {
-      const res = await login(data).unwrap();
+      const res = await login({
+        email: data.email,
+        password: data.password,
+      }).unwrap();
       navigate("/");
       console.log(res);
     } catch (err) {

@@ -19,12 +19,14 @@ import Logo from "@/assets/icons/Logo";
 const navigationLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/", label: "Tours" },
+  { href: "/", label: "Contact" },
 ];
 
 export default function Navbar() {
   return (
     <header className="border-b">
-      <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-4">
+      <div className="container mx-auto px-4 flex h-16 md:h-20 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
           {/* Mobile menu trigger */}
@@ -62,7 +64,7 @@ export default function Navbar() {
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink
                       asChild
-                      className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                      className="text-muted-foreground py-1.5 font-medium"
                     >
                       <Link to={link.href}>{link.label}</Link>
                     </NavigationMenuLink>

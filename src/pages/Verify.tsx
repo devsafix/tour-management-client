@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/input-otp";
 import { cn } from "@/lib/utils";
 import {
+  useSendOtpMutation,
+  useVerifyOtpMutation,
 } from "@/redux/features/auth/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dot } from "lucide-react";
@@ -82,6 +84,7 @@ export default function Verify() {
       if (res.success) {
         toast.success("OTP Verified", { id: toastId });
         setConfirmed(true);
+        navigate("/");
       }
     } catch (err) {
       console.log(err);

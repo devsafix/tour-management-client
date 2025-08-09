@@ -25,6 +25,7 @@ export function LoginForm({
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await login(data).unwrap();
+      navigate("/");
       console.log(res);
     } catch (err) {
       console.error(err);

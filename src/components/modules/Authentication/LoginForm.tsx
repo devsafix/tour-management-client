@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import config from "@/config";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { useState } from "react";
@@ -34,13 +35,18 @@ export function LoginForm({
         email: data.email,
         password: data.password,
       };
+
       const res = await login(userInfo).unwrap();
+      console.log(res.data);
+
       if (res.success) {
         toast.success("Logged in successfully");
         navigate("/");
         setLoading(false);
       }
     } catch (err: any) {
+      setLoading(false);
+
       if (err.data.message === "User does not exist") {
         toast.error("User does not exist");
       }
@@ -117,6 +123,7 @@ export function LoginForm({
         </div>
 
         <Button
+          onClick={() => window.open(`${config.baseUrl}/auth/google`)}
           type="button"
           variant="outline"
           className="w-full cursor-pointer"

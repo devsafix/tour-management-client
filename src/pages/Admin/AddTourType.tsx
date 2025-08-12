@@ -1,19 +1,18 @@
-import { AddTourTypeModal } from "@/components/modules/Admin/TourType/AddTourModal";
+import { AddTourTypeModal } from "@/components/Admin/TourType/AddTourModal";
 import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetTourTypesQuery } from "@/redux/features/Tour/tour.api";
+// import { useGetTourTypesQuery } from "@/redux/features/Tour/tour.api";
 import { Trash2 } from "lucide-react";
 
 export default function AddTourType() {
-  const { data } = useGetTourTypesQuery(undefined);
+  // const { data } = useGetTourTypesQuery(undefined);
 
   return (
     <div className="w-full max-w-7xl mx-auto px-5">
@@ -29,7 +28,7 @@ export default function AddTourType() {
               <TableHead className="text-right">Action</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          {/* <TableBody>
             {data?.data?.map((item: { name: string }) => (
               <TableRow>
                 <TableCell className="font-medium w-full">
@@ -42,7 +41,7 @@ export default function AddTourType() {
                 </TableCell>
               </TableRow>
             ))}
-          </TableBody>
+          </TableBody> */}
         </Table>
       </div>
     </div>

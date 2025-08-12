@@ -1,5 +1,5 @@
 import Bookings from "@/pages/User/Bookings";
-import { ISidebarItem } from "@/types";
+import type { ISidebarItem } from "@/types";
 
 export const userSidebarItems: ISidebarItem[] = [
   {

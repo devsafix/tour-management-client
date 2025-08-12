@@ -1,5 +1,5 @@
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
-import { TRole } from "@/types";
+import type { TRole } from "@/types";
 import type { ComponentType } from "react";
 import { Navigate } from "react-router";
 

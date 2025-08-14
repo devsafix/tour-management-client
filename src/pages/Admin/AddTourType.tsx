@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AddTourTypeModal } from "@/components/Admin/TourType/AddTourModal";
+import { AddTourTypeModal } from "@/components/modules/Admin/TourType/AddTourModal";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import Error from "@/components/Error";
 import Loading from "@/components/Loading";

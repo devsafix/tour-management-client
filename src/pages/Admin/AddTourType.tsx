@@ -1,4 +1,5 @@
 import { AddTourTypeModal } from "@/components/Admin/TourType/AddTourModal";
+import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import Error from "@/components/Error";
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
@@ -26,6 +27,20 @@ export default function AddTourType() {
     );
   }
 
+  // const [removeTourType] = useRemoveTourTypeMutation();
+
+  const handleRemoveTourType = async (tourId: string) => {
+    // const toastId = toast.loading("Removing...");
+    // try {
+    //   const res = await removeTourType(tourId).unwrap();
+    //   if (res.success) {
+    //     toast.success("Removed", { id: toastId });
+    //   }
+    // } catch (err) {
+    //   console.error(err);
+    // }
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto p-6 lg:p-8">
       <div className="flex justify-between items-center mb-6">
@@ -52,14 +67,18 @@ export default function AddTourType() {
                     {item?.name}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="hover:text-destructive"
+                    <DeleteConfirmation
+                      onConfirm={() => handleRemoveTourType(item._id)}
                     >
-                      <Trash2 className="h-5 w-5" />
-                      <span className="sr-only">Delete {item?.name}</span>
-                    </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="hover:text-destructive"
+                      >
+                        <Trash2 className="h-5 w-5" />
+                        <span className="sr-only">Delete {item?.name}</span>
+                      </Button>
+                    </DeleteConfirmation>
                   </TableCell>
                 </TableRow>
               ))

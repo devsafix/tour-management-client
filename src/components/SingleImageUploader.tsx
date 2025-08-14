@@ -24,8 +24,6 @@ export default function SingleImageUploader({ onChange }: any) {
     maxSize,
   });
 
-  console.log("Inside image uploader", files);
-
   useEffect(() => {
     if (files.length > 0) {
       onChange(files[0].file);

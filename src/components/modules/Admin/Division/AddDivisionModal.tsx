@@ -20,16 +20,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useAddDivisionMutation } from "@/redux/features/division/division.api";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 // import AddDivision from "../../../../pages/Admin/AddDivision";
 // import { useAddDivisionMutation } from "@/redux/features/division/division.api";
-// import { toast } from "sonner";
+import { toast } from "sonner";
 
 export function AddDivisionModal() {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState<File | null>(null);
-  //   const [addDivision] = useAddDivisionMutation();
+  const [addDivision] = useAddDivisionMutation();
 
   console.log("Inside add division modal", image);
 
@@ -46,13 +47,15 @@ export function AddDivisionModal() {
     formData.append("data", JSON.stringify(data));
     formData.append("file", image as File);
 
-    // try {
-    //   const res = await addDivision(formData).unwrap();
-    //   toast.success("Division Added");
-    //   setOpen(false);
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    try {
+      const res = await addDivision(formData).unwrap();
+      if (res.data) {
+        toast.success("Division Added");
+        setOpen(false);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -105,9 +108,9 @@ export function AddDivisionModal() {
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-          {/* <Button disabled={!image} type="submit" form="add-division">
+          <Button disabled={!image} type="submit" form="add-division">
             Save changes
-          </Button> */}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

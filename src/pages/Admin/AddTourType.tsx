@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AddTourTypeModal } from "@/components/Admin/TourType/AddTourModal";
 import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import Error from "@/components/Error";
@@ -11,11 +12,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetTourTypesQuery } from "@/redux/features/tour/tour.api";
+import {
+  useGetTourTypesQuery,
+  useRemoveTourTypeMutation,
+} from "@/redux/features/tour/tour.api";
 import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function AddTourType() {
   const { data, isLoading, error } = useGetTourTypesQuery(undefined);
+  const [removeTourType] = useRemoveTourTypeMutation();
+
+  const handleRemoveTourType = async (tourId: string) => {
+    const toastId = toast.loading("Removing...");
+    try {
+      const res = await removeTourType(tourId).unwrap();
+      if (res.success) {
+        toast.success("Removed", { id: toastId });
+      }
+    } catch (err: any) {
+      toast.error(err.message, { id: toastId });
+    }
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -26,20 +44,6 @@ export default function AddTourType() {
       <Error message="Failed to load tour types. Please check your connection." />
     );
   }
-
-  // const [removeTourType] = useRemoveTourTypeMutation();
-
-  const handleRemoveTourType = async (tourId: string) => {
-    // const toastId = toast.loading("Removing...");
-    // try {
-    //   const res = await removeTourType(tourId).unwrap();
-    //   if (res.success) {
-    //     toast.success("Removed", { id: toastId });
-    //   }
-    // } catch (err) {
-    //   console.error(err);
-    // }
-  };
 
   return (
     <div className="w-full max-w-7xl mx-auto p-6 lg:p-8">

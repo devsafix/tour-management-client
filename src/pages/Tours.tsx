@@ -72,7 +72,7 @@ export default function Tours() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Users className="h-4 w-4 text-primary" />
-                      <span>Max {item.maxGuest} guests</span>
+                      <span>Max {item.maxGuests} guests</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <BarChart2 className="h-4 w-4 text-primary" />

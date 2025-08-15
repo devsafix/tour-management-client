@@ -165,7 +165,7 @@ export default function TourDetails() {
                   <div>
                     <h4 className="font-semibold">Max Guests</h4>
                     <p className="text-muted-foreground text-sm">
-                      {tourData.maxGuest} people
+                      {tourData.maxGuests} people
                     </p>
                   </div>
                 </div>

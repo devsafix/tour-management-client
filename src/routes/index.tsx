@@ -15,6 +15,7 @@ import Unauthorized from "@/pages/Unauthorized";
 import Tours from "@/pages/Tours";
 import TourDetails from "@/pages/TourDetails";
 import HomePage from "@/pages/HomePage";
+import Booking from "@/pages/Booking";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "tours/:id",
         Component: TourDetails,
+      },
+      {
+        path: "booking/:id",
+        Component: withAuth(Booking),
       },
     ],
   },

@@ -71,7 +71,7 @@ const formSchema = z
     excluded: z.array(z.object({ value: z.string() })),
     amenities: z.array(z.object({ value: z.string() })),
     tourPlan: z.array(z.object({ value: z.string() })),
-    maxGuest: z.string().min(1, "Max guest is required"),
+    maxGuests: z.string().min(1, "Max guest is required"),
     minAge: z.string().min(1, "Minimum age is required"),
     division: z.string().min(1, "Division is required"),
     tourType: z.string().min(1, "Tour type is required"),
@@ -120,7 +120,7 @@ export default function AddTour() {
       excluded: [{ value: "Personal expenses" }],
       amenities: [{ value: "Air-conditioned rooms" }],
       tourPlan: [{ value: "Day 1: Arrival and beach exploration" }],
-      maxGuest: "25",
+      maxGuests: "25",
       minAge: "5",
       division: "",
       tourType: "",
@@ -201,7 +201,7 @@ export default function AddTour() {
       ...data,
       costFrom: Number(data.costFrom),
       minAge: Number(data.minAge),
-      maxGuest: Number(data.maxGuest),
+      maxGuests: Number(data.maxGuests),
       startDate: formatISO(data.startDate),
       endDate: formatISO(data.endDate),
       included: data.included.map((item: { value: string }) => item.value),
@@ -387,7 +387,7 @@ export default function AddTour() {
               <MultiColumn>
                 <FormField
                   control={form.control}
-                  name="maxGuest"
+                  name="maxGuests"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Max Guest</FormLabel>

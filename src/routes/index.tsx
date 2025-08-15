@@ -14,6 +14,7 @@ import { userSidebarItems } from "./userSidebarItems";
 import Unauthorized from "@/pages/Unauthorized";
 import Tours from "@/pages/Tours";
 import TourDetails from "@/pages/TourDetails";
+import HomePage from "@/pages/HomePage";
 
 export const router = createBrowserRouter([
   {
@@ -21,18 +22,22 @@ export const router = createBrowserRouter([
     Component: App,
     children: [
       {
+        index: true,
+        Component: HomePage,
+      },
+      {
         path: "about",
         Component: About,
       },
+      {
+        path: "/tours",
+        Component: Tours,
+      },
+      {
+        path: "tours/:id",
+        Component: TourDetails,
+      },
     ],
-  },
-  {
-    path: "/tours",
-    Component: Tours,
-  },
-  {
-    path: "tours/:id",
-    Component: TourDetails,
   },
   {
     Component: withAuth(DashboardLayout, role.superAdmin as TRole),

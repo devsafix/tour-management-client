@@ -101,7 +101,7 @@ export default function Tours() {
                       From ৳{item.costFrom.toLocaleString()}
                     </div>
                     <Button asChild>
-                      <Link to={`/tours/${item.slug}`}>View Details</Link>
+                      <Link to={`/tours/${item._id}`}>View Details</Link>
                     </Button>
                   </CardFooter>
                 </div>

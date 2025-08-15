@@ -13,6 +13,7 @@ import { adminSidebarItems } from "./adminSidebarItems";
 import { userSidebarItems } from "./userSidebarItems";
 import Unauthorized from "@/pages/Unauthorized";
 import Tours from "@/pages/Tours";
+import TourDetails from "@/pages/TourDetails";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,14 @@ export const router = createBrowserRouter([
         Component: About,
       },
     ],
+  },
+  {
+    path: "/tours",
+    Component: Tours,
+  },
+  {
+    path: "tours/:id",
+    Component: TourDetails,
   },
   {
     Component: withAuth(DashboardLayout, role.superAdmin as TRole),
@@ -56,9 +65,5 @@ export const router = createBrowserRouter([
   {
     path: "/unauthorized",
     Component: Unauthorized,
-  },
-  {
-    path: "/tours",
-    Component: Tours,
   },
 ]);

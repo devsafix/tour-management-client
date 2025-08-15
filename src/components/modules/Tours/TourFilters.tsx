@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -9,9 +10,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetDivisionsQuery } from "@/redux/features/division/division.api";
 import { useGetTourTypesQuery } from "@/redux/features/tour/tour.api";
 import { useSearchParams } from "react-router";
+import { Loader2, X } from "lucide-react";
 
 export default function TourFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,7 +28,7 @@ export default function TourFilters() {
   const { data: tourTypeData, isLoading: tourTypeIsLoading } =
     useGetTourTypesQuery({ limit: 1000, fields: "_id,name" });
 
-  const divisionOption = divisionData?.map(
+  const divisionOptions = divisionData?.map(
     (item: { _id: string; name: string }) => ({
       label: item.name,
       value: item._id,
@@ -58,60 +61,83 @@ export default function TourFilters() {
     setSearchParams(params);
   };
 
+  const isFilterActive = selectedDivision || selectedTourType;
+
   return (
-    <div className="col-span-3 w-full h-[500px] border border-muted rounded-md p-5 space-y-4">
-      <div className="flex justify-between items-center">
-        <h1>Filters</h1>
-        <Button size="sm" variant="outline" onClick={handleClearFilter}>
-          Clear Filter
+    <Card className="col-span-12 md:col-span-3 h-fit sticky top-20">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle className="text-xl">Filters</CardTitle>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={handleClearFilter}
+          disabled={!isFilterActive}
+          className="flex items-center gap-1"
+        >
+          <X className="h-4 w-4" />
+          Clear all
         </Button>
-      </div>
-      <div>
-        <Label className="mb-2">Division to visit</Label>
-        <Select
-          onValueChange={(value) => handleDivisionChange(value)}
-          value={selectedDivision ? selectedDivision : ""}
-          disabled={divisionIsLoading}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Divisions</SelectLabel>
-              {divisionOption?.map((item: { value: string; label: string }) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-      <div>
-        <Label className="mb-2">Tour Type</Label>
-        <Select
-          onValueChange={handleTourTypeChange}
-          value={selectedTourType ? selectedTourType : ""}
-          disabled={tourTypeIsLoading}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Divisions</SelectLabel>
-              {tourTypeOptions?.map(
-                (item: { value: string; label: string }) => (
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div>
+          <Label className="mb-2 block text-muted-foreground font-semibold">
+            Division to visit
+          </Label>
+          <Select
+            onValueChange={handleDivisionChange}
+            value={selectedDivision ?? ""}
+            disabled={divisionIsLoading}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select a division" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Divisions</SelectLabel>
+                {divisionOptions?.map((item: any) => (
                   <SelectItem key={item.value} value={item.value}>
                     {item.label}
                   </SelectItem>
-                )
-              )}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-    </div>
+                ))}
+                {divisionIsLoading && (
+                  <div className="flex justify-center py-2 text-sm text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  </div>
+                )}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label className="mb-2 block text-muted-foreground font-semibold">
+            Tour Type
+          </Label>
+          <Select
+            onValueChange={handleTourTypeChange}
+            value={selectedTourType ?? ""}
+            disabled={tourTypeIsLoading}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select a tour type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Tour Types</SelectLabel>
+                {tourTypeOptions?.map((item: any) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+                {tourTypeIsLoading && (
+                  <div className="flex justify-center py-2 text-sm text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  </div>
+                )}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

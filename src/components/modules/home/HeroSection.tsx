@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from "@/components/ui/button";
 import Logo from "@/assets/icons/Logo";
 import { Link } from "react-router";
@@ -19,8 +18,7 @@ export default function HeroSection() {
     undefined
   );
 
-  const { data: divisionData, isLoading: divisionIsLoading } =
-    useGetDivisionsQuery(undefined);
+  const { data: divisionData } = useGetDivisionsQuery(undefined);
 
   const divisionOption = divisionData?.map(
     (item: { _id: string; name: string }) => ({
